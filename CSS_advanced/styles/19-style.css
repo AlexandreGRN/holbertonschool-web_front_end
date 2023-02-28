@@ -177,12 +177,12 @@ ul.row{
 }
 
 .col-1-2{
-    width: 50.00%;
+    width: 50%;
     float: left;
     padding: 0.5rem;
 }
 
-ul.footer{
+.footer ul{
     text-align: right;
 }
 
