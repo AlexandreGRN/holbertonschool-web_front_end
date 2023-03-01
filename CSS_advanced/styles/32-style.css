@@ -398,10 +398,6 @@ ul.row{
     padding: 10rem 40rem 2rem 0;
 }
 
-.card-image .card-work:hover{
-    transform: scale(1.2);
-}
-
 .card-outer .card-work:hover{
     transform: scale(0.95);
 }
@@ -413,4 +409,9 @@ ul.row{
 
 .card-work:hover .card-outer {
     transform: scale(0.95);
-  }
+}
+
+.card-work .card-inner {
+    transform: scale(1.2);
+    transition: var(--transition-duration) var(--transition-cubic-bezier);
+}
