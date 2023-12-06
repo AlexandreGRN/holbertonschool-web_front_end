@@ -1,0 +1,12 @@
+@mixin marginmix($margin_depth){
+    margin-left: $margin_depth;
+    margin-right: $margin_depth;
+}
+
+body {
+    @include marginmix(10px);
+}
+
+div {
+    @include marginmix(15px);
+}
