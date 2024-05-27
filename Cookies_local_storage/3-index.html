@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>Storage</title>
+  </head>
+  <body>
+    <div id="form">
+      <h1>Login to website</h1>
+      <form>
+        <input type="text" id="firstname" name="firstname" />
+        <input type="text" id="email" name="email" />
+      </form>
+      <button id="login">Login</button>
+    </div>
+    <div id="welcomeMessage" style="display: none;">
+      <p></p>
+      <button id="logout">logout</button>
+    </div>
+    <script>
+      document.getElementById('login').addEventListener('click', logIn);
+      document.getElementById('logout').addEventListener('click', logOut);
+      document.getElementById('show').addEventListener('click', showCookies);
+
+      function setCookie() {
+          var date = new Date();
+          date.setTime(date.getTime() + (10 * 24 * 60 * 60 * 1000));
+          var expires = "expires=" + date.toUTCString();
+          let cookieValueName = document.getElementById('firstname').value;
+          document.cookie = `firstname=${cookieValueName}; expires=${expires}; path=/`;
+          let cookieValueMail = document.getElementById('email').value;
+          document.cookie = `email=${cookieValueMail}; expires=${expires}; path=/`;
+      }
+
+      function getCookies(name){
+        let cookieArray = document.cookie.split(';');
+        let cookieValue = '';
+        cookieArray.forEach(cookie => {
+          let cookieKeyVal = cookie.split('=');
+          if(cookieKeyVal[0].trim() == name){
+            cookieValue = cookieKeyVal[1];
+          }
+        });
+        return cookieValue;
+      }
+
+      function showForm()
+      {
+        document.getElementById('form').style.display = "block";
+      }
+
+      function hideForm()
+      {
+        document.getElementById('form').style.display = "none";
+      }
+
+      function deleteCookiesAndShowForm()
+      {
+        document.cookie = "firstname=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        document.cookie = "email=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        document.getElementById('welcomeMessage').style.display = "none";
+        showForm();
+      }
+
+      function showWelcomeMessageOrForm()
+      {
+        if(getCookies("firstname") && getCookies("email"))
+        {
+          hideForm();
+          document.getElementById('welcomeMessage').getElementsByTagName('p')[0].innerText = `Welcome ${getCookies("firstname")} - ${getCookies("email")}`;
+          document.getElementById('welcomeMessage').style.display = "block";
+        }
+        else
+        {
+          showForm();
+        }
+      }
+
+      function logIn()
+      {
+        setCookie();
+        showWelcomeMessageOrForm();
+      }
+
+      function logOut()
+      {
+        deleteCookiesAndShowForm();
+      }
+
+    </script>
+  </body>

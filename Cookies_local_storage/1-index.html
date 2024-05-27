@@ -23,13 +23,17 @@
       document.getElementById('show').addEventListener('click', showCookies);
 
       function setCookie() {
+          var date = new Date();
+          date.setTime(date.getTime() + (10 * 24 * 60 * 60 * 1000));
+          var expires = "expires=" + date.toUTCString();
           let cookieValueName = document.getElementById('firstname').value;
-          document.cookie = `firstname=${cookieValueName}`;
+          document.cookie = `firstname=${cookieValueName}; expires=${expires}; path=/`;
           let cookieValueMail = document.getElementById('email').value;
-          document.cookie = `email=${cookieValueMail}`;
+          document.cookie = `email=${cookieValueMail}; expires=${expires}; path=/`;
       }
 
       function showCookies() {
+        console.log(document.cookie);
           let cookieArray = document.cookie.split(';');
           let cookieOutput = '';
           cookieArray.forEach(cookie => {

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>Storage</title>
+  </head>
+  <body>
+    <div id="form">
+      <h1>Login to website</h1>
+      <form>
+        <input type="text" id="firstname" name="firstname" />
+        <input type="text" id="email" name="email" />
+      </form>
+      <button id="login">Login</button>
+    </div>
+    <div id="welcomeMessage" style="display: none;">
+      <p></p>
+      <button id="logout">logout</button>
+    </div>
+    <script>
+      document.getElementById('login').addEventListener('click', logIn);
+      document.getElementById('logout').addEventListener('click', logOut);
+      document.getElementById('show').addEventListener('click', showCookies);
+
+      function setCookie() {
+          let cookieValueName = document.getElementById('firstname').value;
+          let cookieValueMail = document.getElementById('email').value;
+          Cookies.set('firstname', cookieValueName, { expires: 10, path: '' })
+          Cookies.set('email', cookieValueMail, { expires: 10, path: '' })
+      }
+
+      function deleteCookiesAndShowForm()
+      {
+        Cookies.remove('firstname');
+        Cookies.remove('email');
+        document.getElementById('welcomeMessage').style.display = "none";
+        document.getElementById('form').style.display = "block";
+      }
+
+      function showWelcomeMessageOrForm()
+      {
+        if(Cookies.get("firstname") && Cookies.get("email"))
+        {
+          document.getElementById('form').style.display = "none";
+          document.getElementById('welcomeMessage').getElementsByTagName('p')[0].innerText = `Welcome ${Cookies.get("firstname")} - ${Cookies.get("email")}`;
+          document.getElementById('welcomeMessage').style.display = "block";
+        }
+        else
+        {
+          document.getElementById('form').style.display = "block";
+        }
+      }
+
+      function logIn()
+      {
+        setCookie();
+        showWelcomeMessageOrForm();
+      }
+
+      function logOut()
+      {
+        deleteCookiesAndShowForm();
+      }
+
+    </script>
+  </body>
