@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>Storage</title>
+  </head>
+  <body>
+    <div>
+      <ul id="item_list"></ul>
+    </div>
+    <div>
+      <button onclick="displayCart()">Show Cart</button>
+      <ul id="cart"></ul>
+    </div>
+    <div>
+      <button onclick="clearAllCookies()">Clear Cart</button>
+    </div>
+    <script>
+      availableItems = ["Shampoo", "Soap", "Sponge", "Water"]
+
+      window.onload = function() {
+        createStore();
+      };
+
+      function clearAllCookies()
+      {
+        let cookies = Cookies.get();
+        for (const cookie in cookies) {
+          Cookies.remove(cookie);
+        }
+        displayCart();
+      }
+
+      function addItemToCart(item)
+      {
+        let cart = Cookies.get("cart");
+        if(cart)
+        {
+          cart = JSON.parse(cart);
+          cart.push(item);
+          Cookies.set("cart", JSON.stringify(cart));
+        }
+        else
+        {
+          Cookies.set("cart", JSON.stringify([item]));
+        }
+        console.log(Cookies.get());
+      }
+
+      function createStore()
+      {
+        availableItems.forEach(item => {
+          let li = document.createElement("li");
+          li.innerText = item;
+          li.addEventListener("click", () => addItemToCart(item));
+          document.getElementById('item_list').appendChild(li);
+        });
+      }
+
+      function displayCart()
+      {
+        document.getElementById('cart').innerHTML = "";
+        let cart = Cookies.get("cart");
+        if(cart)
+        {
+          cart = JSON.parse(cart);
+          cart.forEach(item => {
+            let li = document.createElement("li");
+            li.innerText = item;
+            document.getElementById('cart').appendChild(li);
+          });
+        }
+      }
+    </script>
+  </body>
+</html>
